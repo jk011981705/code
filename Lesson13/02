@@ -1,0 +1,27 @@
+import java.util.*;
+
+class Solution {
+    public int[] solution(int[] A, int[] B) {
+        // write your code in Java SE 8
+        
+        int N = A.length;
+        int[] F = new int[N+5];
+        int[] R = new int[N];
+        int re =0;
+        
+        F[1]=1;
+        F[2]=2;
+        
+        for(int i=3;i<N+1;i++){
+                
+            F[i]= (F[i-1]+F[i-2]) % (1<<30);
+        }
+        
+        for(int i=0;i<N;i++){
+            
+            R[i] = F[A[i]]%(1<<B[i]);   
+        }
+        return R;
+    }
+   
+}
