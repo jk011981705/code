@@ -1,0 +1,74 @@
+import java.util.*;
+
+class Solution {
+    
+   
+    
+    public int solution(int[] A) {
+        // write your code in Java SE 8
+        
+        int[] F = new int[100];
+        boolean[] visit = new boolean[A.length];
+        int f_last;
+        int cc=1;
+        int N = A.length;
+        
+        F[0]=0;
+        F[1]=1;
+    
+        while(true){
+            cc++;
+            F[cc] = F[cc-1]+F[cc-2];
+            
+            if(F[cc]>A.length+1) {break;}
+        }
+        
+        ArrayList<Frog> frogQueue = new ArrayList<Frog>();
+        
+        frogQueue.add(new Frog(-1,0));
+        
+        int next=0;
+        
+        while(true){
+            
+            if(next == frogQueue.size()) return -1;
+            
+            Frog curfr = frogQueue.get(next);
+            next++;
+            
+            int curPosition = curfr.position;
+            int curJump = curfr.jump;
+            
+            for(int i= cc-1;i>0;i--){
+                
+                if(curPosition+F[i]==N){
+                    return curJump+1;
+                }
+                else if(curPosition+F[i]>N||
+                        A[curPosition + F[i]]==0||visit[curPosition+F[i]]){
+                    continue;            
+                }
+                        
+                frogQueue.add(new Frog(curPosition+F[i],curJump+1));
+                visit[curPosition+F[i]]=true;
+                
+            }
+                
+            
+            
+        }
+        
+        
+    }
+}
+
+class Frog{
+    
+    int position;
+    int jump;
+    
+    Frog(int position, int jump){
+        this.position = position;
+        this.jump = jump;
+    }
+}
